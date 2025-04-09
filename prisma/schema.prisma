@@ -1,0 +1,249 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Profile {
+  id        String   @id @default(uuid())
+  type      Type     @default(PROFESSIONAL)
+  bioId     String?  @unique
+  contactId String?  @unique
+  socialsId String?  @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  bio       Bio?     @relation(fields: [bioId], references: [id])
+  contact   Contact? @relation(fields: [contactId], references: [id])
+  socials   Socials? @relation(fields: [socialsId], references: [id])
+}
+
+model Bio {
+  id        String    @id @default(uuid())
+  name      String    @default("")
+  title     String    @default("")
+  bio       String    @default("")
+  avatar    String?
+  location  String?
+  birthday  DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  profile   Profile?
+}
+
+model Contact {
+  id          String   @id @default(uuid())
+  email       String   @default("")
+  phoneNumber String?
+  address     String?
+  resumeUrl   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  profile     Profile?
+}
+
+model Socials {
+  id        String   @id @default(uuid())
+  github    String?
+  linkedin  String?
+  website   String?
+  discord   String?
+  telegram  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  profile   Profile?
+}
+
+model Post {
+  id        String   @id @default(uuid())
+  title     String   @default("")
+  slug      String   @unique
+  type      Type     @default(PROFESSIONAL)
+  thumbnail String?
+  content   String   @default("")
+  published Boolean  @default(false)
+  tags      String[] @default([])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Project {
+  id           String        @id @default(uuid())
+  title        String        @default("")
+  description  String        @default("")
+  image        String?
+  linksId      String?       @unique
+  technologies String[]      @default([])
+  projectType  Type          @default(PROFESSIONAL)
+  featured     Boolean       @default(false)
+  status       ProjectStatus @default(IN_PROGRESS)
+  datesId      String?       @unique
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  dates        DateRange?    @relation(fields: [datesId], references: [id])
+  links        ProjectLinks? @relation(fields: [linksId], references: [id])
+}
+
+model ProjectLinks {
+  id        String   @id @default(uuid())
+  githubUrl String?
+  liveUrl   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  project   Project?
+}
+
+model DateRange {
+  id         String      @id @default(uuid())
+  startDate  DateTime    @default(now())
+  endDate    DateTime?
+  current    Boolean     @default(false)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  experience Experience?
+  project    Project?
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  senderId  String?  @unique
+  subject   String   @default("")
+  content   String   @default("")
+  read      Boolean  @default(false)
+  featured  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isCasual  Boolean  @default(true)
+  sender    Sender?  @relation(fields: [senderId], references: [id])
+}
+
+model Sender {
+  id        String   @id @default(uuid())
+  name      String   @default("")
+  email     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  message   Message?
+}
+
+model Experience {
+  id          String     @id @default(uuid())
+  company     String     @default("")
+  position    String     @default("")
+  location    String?
+  datesId     String?    @unique
+  description String     @default("")
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  portfolioId String?
+  dates       DateRange? @relation(fields: [datesId], references: [id])
+  Portfolio   Portfolio? @relation(fields: [portfolioId], references: [id])
+}
+
+model Interest {
+  id          String         @id @default(uuid())
+  type        InterestType   @default(OTHER)
+  title       String         @default("")
+  description String         @default("")
+  status      InterestStatus @default(CURRENT)
+  link        String?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  portfolioId String?
+  Portfolio   Portfolio?     @relation(fields: [portfolioId], references: [id])
+}
+
+model Portfolio {
+  id             String          @id @default(uuid())
+  type           Type            @default(PROFESSIONAL)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  certifications Certification[]
+  experiences    Experience[]
+  interests      Interest[]
+  skills         Skill[]
+}
+
+model Certification {
+  id            String     @id @default(uuid())
+  name          String     @default("")
+  issuer        String     @default("")
+  issueDate     DateTime?  @default(now())
+  expiryDate    DateTime?
+  credentialUrl String?
+  description   String?
+  featured      Boolean    @default(false)
+  portfolioId   String?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  portfolio     Portfolio? @relation(fields: [portfolioId], references: [id])
+  skills        Skill[]
+}
+
+model Skill {
+  id              String           @id @default(uuid())
+  name            String           @default("")
+  category        SkillCategory    @default(OTHERS)
+  proficiency     ProficiencyLevel @default(BEGINNER)
+  portfolioId     String?
+  certificationId String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  certification   Certification?   @relation(fields: [certificationId], references: [id])
+  portfolio       Portfolio?       @relation(fields: [portfolioId], references: [id])
+}
+
+enum InterestStatus {
+  CURRENT
+  COMPLETED
+  PLANNED
+  ONGOING
+}
+
+enum InterestType {
+  BOOK
+  MUSIC
+  HOBBY
+  SPORT
+  GAMES
+  TECHNOLOGY
+  LEARNING
+  OTHER
+  PROFESSIONAL
+}
+
+enum ProficiencyLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  EXPERT
+  MASTER
+}
+
+enum ProjectStatus {
+  PLANNED
+  IN_PROGRESS
+  COMPLETED
+  ARCHIVED
+}
+
+enum SkillCategory {
+  TECHNOLOGY
+  SOFT_SKILLS
+  OTHERS
+}
+
+enum Type {
+  PROFESSIONAL
+  CASUAL
+}
