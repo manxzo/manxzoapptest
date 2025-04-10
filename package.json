@@ -19,6 +19,7 @@
     "bcryptjs": "^3.0.2",
     "clsx": "2.1.1",
     "framer-motion": "11.13.1",
+    "gl-matrix": "^3.4.3",
     "gsap": "^3.12.7",
     "intl-messageformat": "^10.7.16",
     "jose": "^6.0.10",

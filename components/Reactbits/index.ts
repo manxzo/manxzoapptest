@@ -14,3 +14,5 @@ export { default as RotatingText } from "./TextAnimations/RotatingText/RotatingT
 //Components
 export { default as Dock } from "./Components/Dock/Dock";
 export { default as PixelCard } from "./Components/PixelCard/PixelCard";
+export { default as InfiniteMenu } from "./Components/InfiniteMenu/InfiniteMenu";
+export { default as Masonry } from "./Components/Masonry/Masonry";

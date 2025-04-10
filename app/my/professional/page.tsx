@@ -1,9 +1,14 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
 export default function ProfessionalPage() {
-  return (
-    <div>
-      <h1>Professional Page</h1>
-    </div>
-  );
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push("/my/professional/dashboard");
+  }, [router]);
+
+  return null;
 }
