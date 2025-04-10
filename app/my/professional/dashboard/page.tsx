@@ -1,3 +1,5 @@
+"use client";
+
 export default function ProfessionalDashboardPage() {
   return (
     <div>

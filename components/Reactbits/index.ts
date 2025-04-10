@@ -1,3 +1,4 @@
+"use client";
 //Backgrounds
 export { default as Aurora } from "./Backgrounds/Aurora/Aurora";
 export { default as HyperSpeed } from "./Backgrounds/Hyperspeed/Hyperspeed";
