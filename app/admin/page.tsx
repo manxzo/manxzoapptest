@@ -1,9 +1,11 @@
 "use client";
-
+import { FuzzyText } from "@/components/Reactbits";
 export default function AdminPage() {
   return (
     <div>
-      <h1>Admin Page</h1>
+      <FuzzyText baseIntensity={0.2} hoverIntensity={0.5} enableHover={true}>
+        Are you an admin?
+      </FuzzyText>
     </div>
   );
 }
