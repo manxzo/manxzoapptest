@@ -40,3 +40,12 @@ next-env.d.ts
 #prisma
 prisma/dev.db
 prisma/migrations
+
+#cursor
+.cursor/*
+.cursor/
+.mdc
+#vscode
+.vscode/*
+.vscode/
+
