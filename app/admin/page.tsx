@@ -2,14 +2,7 @@
 import { FuzzyText } from "@/components/Reactbits";
 import { useEffect, useState } from "react";
 import { ArrowDown, ArrowUp, ArrowLeft, ArrowRight } from "lucide-react";
-import {
-  Button,
-  Input,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-} from "@heroui/react";
+import { Button, Input, Card, CardBody, CardFooter } from "@heroui/react";
 
 export default function AdminPage() {
   const KONAMI_SEQUENCE = [
@@ -69,7 +62,12 @@ export default function AdminPage() {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen gap-8">
-      <FuzzyText baseIntensity={0.2} hoverIntensity={0.5} enableHover={true} fontSize={36}>
+      <FuzzyText
+        baseIntensity={0.2}
+        hoverIntensity={0.5}
+        enableHover={true}
+        fontSize={36}
+      >
         {showOverlay
           ? "Alright fine, maybe you are an admin."
           : "Are you an admin?"}
@@ -97,7 +95,12 @@ export default function AdminPage() {
             />
           </CardBody>
           <CardFooter className="flex justify-center">
-            <Button onPress={handleLogin} color="secondary" variant="bordered" className="w-full">
+            <Button
+              onPress={handleLogin}
+              color="secondary"
+              variant="bordered"
+              className="w-full"
+            >
               Login
             </Button>
           </CardFooter>
