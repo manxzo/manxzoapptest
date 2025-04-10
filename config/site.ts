@@ -82,10 +82,6 @@ export const siteConfig = {
 
   adminCasualItems: [
     {
-      label: "Casual Admin",
-      href: "/admin/casual",
-    },
-    {
       label: "Dashboard",
       href: "/admin/casual/dashboard",
     },
@@ -112,10 +108,6 @@ export const siteConfig = {
   ],
 
   adminProfessionalItems: [
-    {
-      label: "Professional Admin",
-      href: "/admin/professional",
-    },
     {
       label: "Dashboard",
       href: "/admin/professional/dashboard",
